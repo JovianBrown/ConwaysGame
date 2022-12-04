@@ -42,12 +42,11 @@ class Board
     public:
         Board(int width, int height)
         {
-            this->width = width;
-            this->height = height;
-            this->m_TilesX = width/TILE_SIZE;
-            this->m_TilesY = height/TILE_SIZE;
-
-            this->m_TotalTiles = (width / TILE_SIZE)*(height/ TILE_SIZE);
+            width = bWidth;
+            height = bHeight;
+            m_TilesX = width/TILE_SIZE;
+            m_TilesY = height/TILE_SIZE;
+            m_TotalTiles = (width / TILE_SIZE)*(height/ TILE_SIZE);
         }
         void addTile(int x, int y);
         void removeOldTiles();

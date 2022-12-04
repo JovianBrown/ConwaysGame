@@ -53,17 +53,7 @@ void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
         updateBoard(board);
         
     }
-    if(keystates[SDL_SCANCODE_G] && m_Update == true)
-    {
-        m_Update = false;
-        board.generate();
-        
-    }
-    if(keystates[SDL_SCANCODE_R] )
-    {
-        board.removeOldTiles();
-        
-    }
+  
     if(keystates[SDL_SCANCODE_N])
     {
         board = getBoard(board);
