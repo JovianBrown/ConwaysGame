@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04057ED8293CC81200EA67C5 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04057ED7293CC81200EA67C5 /* SDL2_ttf.framework */; };
+		04057EDB293CC8C500EA67C5 /* gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04057ED9293CC8C500EA67C5 /* gui.cpp */; };
 		0474BB90293BA97A004B5F29 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0474BB8F293BA97A004B5F29 /* main.cpp */; };
 		0474BB98293BA9E1004B5F29 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0474BB97293BA9E1004B5F29 /* SDL2.framework */; };
 		0474BB9B293BAEC3004B5F29 /* board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0474BB99293BAEC3004B5F29 /* board.cpp */; };
@@ -25,6 +27,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04057ED7293CC81200EA67C5 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
+		04057ED9293CC8C500EA67C5 /* gui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
+		04057EDA293CC8C500EA67C5 /* gui.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gui.hpp; sourceTree = "<group>"; };
+		04057EDD293CCFF900EA67C5 /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
 		0474BB8C293BA97A004B5F29 /* ConwaysGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ConwaysGame; sourceTree = BUILT_PRODUCTS_DIR; };
 		0474BB8F293BA97A004B5F29 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0474BB97293BA9E1004B5F29 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -37,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04057ED8293CC81200EA67C5 /* SDL2_ttf.framework in Frameworks */,
 				0474BB98293BA9E1004B5F29 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,11 +51,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04057EDC293CCFCB00EA67C5 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				04057EDD293CCFF900EA67C5 /* Georgia.ttf */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
 		0474BB83293BA97A004B5F29 = {
 			isa = PBXGroup;
 			children = (
 				0474BB8E293BA97A004B5F29 /* ConwaysGame */,
-				0474BB8D293BA97A004B5F29 /* Products */,
 				0474BB96293BA9E1004B5F29 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -59,14 +73,19 @@
 				0474BB8C293BA97A004B5F29 /* ConwaysGame */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		0474BB8E293BA97A004B5F29 /* ConwaysGame */ = {
 			isa = PBXGroup;
 			children = (
+				04057EDC293CCFCB00EA67C5 /* res */,
 				0474BB8F293BA97A004B5F29 /* main.cpp */,
 				0474BB99293BAEC3004B5F29 /* board.cpp */,
 				0474BB9A293BAEC3004B5F29 /* board.hpp */,
+				04057ED9293CC8C500EA67C5 /* gui.cpp */,
+				04057EDA293CC8C500EA67C5 /* gui.hpp */,
+				0474BB8D293BA97A004B5F29 /* Products */,
 			);
 			path = ConwaysGame;
 			sourceTree = "<group>";
@@ -74,6 +93,7 @@
 		0474BB96293BA9E1004B5F29 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04057ED7293CC81200EA67C5 /* SDL2_ttf.framework */,
 				0474BB97293BA9E1004B5F29 /* SDL2.framework */,
 			);
 			name = Frameworks;
@@ -135,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04057EDB293CC8C500EA67C5 /* gui.cpp in Sources */,
 				0474BB9B293BAEC3004B5F29 /* board.cpp in Sources */,
 				0474BB90293BA97A004B5F29 /* main.cpp in Sources */,
 			);

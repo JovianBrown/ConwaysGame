@@ -9,25 +9,33 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "board.hpp"
-const int m_WindowWidth = 512;
+#include "gui.hpp"
+const int m_WindowWidth = 768;
 const int m_WindowHeight = 512;
-const int m_TotalCreatures = 150;
+const int m_BoardWidth = 512;
+const int m_BoardHeight = 512;
+const int m_TotalCreatures = 100;
+SDL_Rect rect;
+SDL_Rect mouseRect;
+SDL_Rect currentPosition;
+static Uint32 m_MouseButtons;
 SDL_Renderer* m_Renderer;
+GUI gui(m_BoardWidth,0,m_WindowWidth-m_BoardWidth,m_WindowHeight);
 bool m_IsRunning;
 bool m_Update = false;
 bool m_CreateBoard = true;
+
 void updateBoard(Board &board)
 {
     board.update();
     board.generate();
     board.removeOldTiles();
-    m_Update = false;
 }
 Board getBoard(Board &board)
 {
     if(m_CreateBoard)
     {
-        Board b = Board(m_WindowWidth,m_WindowHeight);
+        Board b = Board(m_BoardWidth,m_BoardHeight);
         for(int i = 0; i < m_TotalCreatures;i++)
         {
             b.addRandomTile();
@@ -36,15 +44,51 @@ Board getBoard(Board &board)
     }
     return board;
 }
+void updateMouse(SDL_Event event, Board &board)
+{
+    int mouseX;
+    int mouseY;
+    
+    if(event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        m_MouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+        currentPosition.h = 5;
+        currentPosition.w = 5;
+        currentPosition.x = mouseX;
+        currentPosition.y = mouseY;
+        gui.update(currentPosition);
+        switch (gui.getMenuItem()) {
+            case 0:
+                updateBoard(board);
+                m_Update = true;
+                break;
+            case 1:
+                board = getBoard(board); //create new board
+                break;
+            case 2:
+                std::cout<<"place pieces manually"<<std::endl;
+                break;
+            case 3:
+                m_IsRunning = false;
+                break;
+                
+        }
+    }
+    if(event.type == SDL_MOUSEBUTTONUP)
+    {
+        m_Update = false;
+    }
+    
+}
 void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
 {
     if(event.type == SDL_QUIT)
     {
-        m_IsRunning=false;
+        m_IsRunning = false;
     }
     if(keystates[SDL_SCANCODE_Q] )
     {
-        m_IsRunning=false;
+        m_IsRunning = false;
     }
     if(keystates[SDL_SCANCODE_U] && m_Update == false ) //update board
     {
@@ -55,6 +99,7 @@ void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
     }
     if(keystates[SDL_SCANCODE_N]) //create new board
     {
+        m_Update = false;
         board = getBoard(board);
         m_CreateBoard = false;
     }
@@ -76,7 +121,6 @@ void renderBoard(SDL_Renderer* m_Renderer, Board& b)
             SDL_RenderFillRect(m_Renderer,&t.rect);
         }
     }
-    SDL_RenderPresent(m_Renderer);
 }
 
 int main()
@@ -89,7 +133,8 @@ int main()
     {
         std::cout<<"window resolution and tilesize conflict!"<<std::endl;
     }
-    m_Window = SDL_CreateWindow("Conways Game",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,m_WindowHeight,m_WindowWidth,SDL_WINDOW_METAL);
+
+    m_Window = SDL_CreateWindow("Conways Game",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,m_WindowWidth,m_WindowHeight,SDL_WINDOW_METAL);
     if(m_Window!=NULL)
         std::cout<<"Window created"<<std::endl;
     else
@@ -108,18 +153,32 @@ int main()
     m_IsRunning=true;
     SDL_Event m_Event;
     srand(SDL_GetTicks());
+    rect.x = m_BoardWidth;   //rectangle values for menu
+    rect.y = 0;
+    rect.w = m_WindowWidth - m_BoardWidth;
+    rect.h = m_WindowHeight;
+    
    // Board board = Board(m_WindowWidth,m_WindowHeight);
    // board.addTile(16, 16); //for testings a condition
    // board.addTile(16, 32); //
    // board.addTile(16, 48); //
     Board board = getBoard(board);
+    gui.addButtons(3);
     while(m_IsRunning)
     {
         SDL_PollEvent(&m_Event);
         renderBoard(m_Renderer,board);
+        gui.render(m_Renderer);
+        SDL_RenderPresent(m_Renderer);
         updateKeyboard(m_Event,m_KeyStates,board);
+        updateMouse(m_Event,board);
+        if(m_Update == true)
+        {
+           // board.update();
+            updateBoard(board);
+        }
         SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
-
+       
     }
     return 0;
 }
