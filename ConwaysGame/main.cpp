@@ -2,7 +2,7 @@
 //  main.cpp
 //  ConwaysGame
 //
-//  Created by mac on 2022/12/3.
+//  Created by Jovian on 2022/12/3.
 //  Copyright © 2022 Jovian. All rights reserved.
 //
 
@@ -46,15 +46,14 @@ void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
     {
         m_IsRunning=false;
     }
-    if(keystates[SDL_SCANCODE_U] && m_Update == false )
+    if(keystates[SDL_SCANCODE_U] && m_Update == false ) //update board
     {
         m_Update = true;
         m_CreateBoard = true;
         updateBoard(board);
         
     }
-  
-    if(keystates[SDL_SCANCODE_N])
+    if(keystates[SDL_SCANCODE_N]) //create new board
     {
         board = getBoard(board);
         m_CreateBoard = false;

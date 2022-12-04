@@ -2,7 +2,7 @@
 //  board.hpp
 //  ConwaysGame
 //
-//  Created by mac on 2022/12/4.
+//  Created by Jovian on 2022/12/4.
 //  Copyright © 2022 Jovian. All rights reserved.
 //
 
@@ -50,39 +50,13 @@ class Board
         }
         void addTile(int x, int y);
         void removeOldTiles();
-
-        std::vector<Tile> getBoard()
-        {
-            return this->tiles;
-        }
-        void addRandomTile()
-        {
-            int x = rand()%32*16;
-            int y = rand()%32*16;
-            for(int i = 0; i < tiles.size(); i++)
-                if(tiles[i].x == x && tiles[i].y == y)
-                    addRandomTile();
-            Tile t = Tile(x,y);
-            tiles.push_back(t);
-        }
-        bool locateTile(int x, int y)
-        {
-            for(Tile &t: tiles)
-                if(t.x == x && t.y == y)
-                    return true;
-            return false;
-        }
-        bool justPlaced(int x, int y)
-        {
-            for(Tile &t: tiles)
-                if(t.x == x && t.y == y && t.justPlaced)
-                    return true;
-            return false;
-        }
+        std::vector<Tile> getBoard();
+        void addRandomTile();
+        bool locateTile(int x, int y);
+        bool justPlaced(int x, int y);
         void generate();
         int getNeighbors(Tile tile);
         int getNeighbors(Tile tile, int flags);
-
         void update();
     private:
         int width;
