@@ -40,7 +40,7 @@ struct Tile
 class Board
 {
     public:
-        Board(int width, int height)
+        Board(int bWidth, int bHeight)
         {
             width = bWidth;
             height = bHeight;
