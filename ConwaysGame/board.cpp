@@ -4,9 +4,18 @@
 //
 //  Created by Jovian on 2022/12/4.
 //  Copyright © 2022 Jovian. All rights reserved.
-//
+
 
 #include "board.hpp"
+#include <set>
+#include <iostream>
+#include <utility>
+
+
+bool Tile::alive()
+{
+    return isAlive;
+}
 void Board::generate()
 {
     for(int i = 0; i < this->m_TilesX; i++ )
@@ -17,8 +26,12 @@ void Board::generate()
                 Board::addTile(i*TILE_SIZE, j*TILE_SIZE);
             }
         }
-
 }
+void Board::deleteAllTiles()
+{
+    tiles.clear();
+}
+
 std::vector<Tile> Board::getBoard()
 {
     return this->tiles;
@@ -37,7 +50,7 @@ void Board::removeOldTiles()
     tiles.clear();
     for(Tile &t: nextGen)
         tiles.emplace_back(t);
-    
+    nextGen.clear();
 }
 bool Board::justPlaced(int x, int y)
 {
@@ -61,8 +74,8 @@ void Board::addTile(int x, int y)
 }
 void Board::addRandomTile()
 {
-    int x = rand()%32*16;
-    int y = rand()%32*16;
+    int x = rand()%m_TilesX*TILE_SIZE;
+    int y = rand()%m_TilesY*TILE_SIZE;
     for(int i = 0; i < tiles.size(); i++)
         if(tiles[i].x == x && tiles[i].y == y)
             addRandomTile();
@@ -80,6 +93,7 @@ void Board::update()
 }
 int Board::getNeighbors(Tile tile, int flags)
 {
+
     int neighbors = 0;
     if(flags == 1)
     {
@@ -89,35 +103,36 @@ int Board::getNeighbors(Tile tile, int flags)
             if(!t.justPlaced)
             {
                 
-                if(t.x-t.TILE_SIZE == tile.x && t.y == tile.y) //East
+                
+                if(t.x+TILE_SIZE == tile.x && t.y == tile.y) //East
                 {
                     neighbors++;
                 }
-                if(t.x+t.TILE_SIZE == tile.x && t.y == tile.y) //West
+                if(t.x-TILE_SIZE == tile.x && t.y == tile.y) //West
                 {
                     neighbors++;
                 }
-                if(t.x == tile.x && t.y-t.TILE_SIZE == tile.y) //north
+                if(t.x == tile.x && t.y-TILE_SIZE == tile.y) //north
                 {
                     neighbors++;
                 }
-                if(t.x == tile.x && t.y+t.TILE_SIZE == tile.y) //south
+                if(t.x == tile.x && t.y+TILE_SIZE == tile.y) //south
                 {
                     neighbors++;
                 }
-                if(t.x-t.TILE_SIZE == tile.x && t.y-t.TILE_SIZE == tile.y) //north west
+                if(t.x-TILE_SIZE == tile.x && t.y-TILE_SIZE == tile.y) //north west
                 {
                     neighbors++;
                 }
-                if(t.x+t.TILE_SIZE == tile.x && t.y-t.TILE_SIZE == tile.y) //north east
+                if(t.x+TILE_SIZE == tile.x && t.y-TILE_SIZE == tile.y) //north east
                 {
                     neighbors++;
                 }
-                if(t.x-t.TILE_SIZE == tile.x && t.y+t.TILE_SIZE == tile.y) //southwest
+                if(t.x-TILE_SIZE == tile.x && t.y+TILE_SIZE == tile.y) //southwest
                 {
                     neighbors++;
                 }
-                if(t.x+t.TILE_SIZE == tile.x && t.y+t.TILE_SIZE == tile.y) //southeast
+                if(t.x+TILE_SIZE == tile.x && t.y+TILE_SIZE == tile.y) //southeast
                 {
                     neighbors++;
                 }
@@ -130,42 +145,47 @@ int Board::getNeighbors(Tile tile, int flags)
 
 int Board::getNeighbors(Tile tile)
 {
+
     int neighbors = 0;
     for(Tile &t: tiles)
     {
 
-            if(t.x-t.TILE_SIZE == tile.x && t.y == tile.y) //East
+            if(t.x+TILE_SIZE == tile.x && t.y == tile.y) //East
             {
                 neighbors++;
             }
-            if(t.x+t.TILE_SIZE == tile.x && t.y == tile.y) //West
+            if(t.x-TILE_SIZE == tile.x && t.y == tile.y) //West
             {
                 neighbors++;
             }
-            if(t.x == tile.x && t.y-t.TILE_SIZE == tile.y) //north
+            if(t.x == tile.x && t.y-TILE_SIZE == tile.y) //north
             {
                 neighbors++;
             }
-            if(t.x == tile.x && t.y+t.TILE_SIZE == tile.y) //south
+            if(t.x == tile.x && t.y+TILE_SIZE == tile.y) //south
             {
                 neighbors++;
             }
-            if(t.x-t.TILE_SIZE == tile.x && t.y-t.TILE_SIZE == tile.y) //north west
+            if(t.x-TILE_SIZE == tile.x && t.y-TILE_SIZE == tile.y) //north west
             {
                 neighbors++;
             }
-            if(t.x+t.TILE_SIZE == tile.x && t.y-t.TILE_SIZE == tile.y) //north east
+            if(t.x+TILE_SIZE == tile.x && t.y-TILE_SIZE == tile.y) //north east
             {
                 neighbors++;
             }
-            if(t.x-t.TILE_SIZE == tile.x && t.y+t.TILE_SIZE == tile.y) //southwest
+            if(t.x-TILE_SIZE == tile.x && t.y+TILE_SIZE == tile.y) //southwest
             {
                 neighbors++;
             }
-            if(t.x+t.TILE_SIZE == tile.x && t.y+t.TILE_SIZE == tile.y) //southeast
+            if(t.x+TILE_SIZE == tile.x && t.y+TILE_SIZE == tile.y) //southeast
             {
                 neighbors++;
             }
     }
+ /*   for(auto t: allNeighbors)
+    {
+        std::cout<<t<<std::endl;
+    } */
     return neighbors;
 }

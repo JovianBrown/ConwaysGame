@@ -14,7 +14,7 @@ const int m_WindowWidth = 768;
 const int m_WindowHeight = 512;
 const int m_BoardWidth = 512;
 const int m_BoardHeight = 512;
-const int m_TotalCreatures = 100;
+const int m_TotalCreatures = 1000;
 SDL_Rect rect;
 SDL_Rect mouseRect;
 SDL_Rect currentPosition;
@@ -24,104 +24,12 @@ GUI gui(m_BoardWidth,0,m_WindowWidth-m_BoardWidth,m_WindowHeight);
 bool m_IsRunning;
 bool m_Update = false;
 bool m_CreateBoard = true;
+void updateBoard(Board &board);
+Board getBoard(Board &board);
+void updateMouse(SDL_Event event, Board &board);
+void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board);
+void renderBoard(SDL_Renderer* m_Renderer, Board& b);
 
-void updateBoard(Board &board)
-{
-    board.update();
-    board.generate();
-    board.removeOldTiles();
-}
-Board getBoard(Board &board)
-{
-    if(m_CreateBoard)
-    {
-        Board b = Board(m_BoardWidth,m_BoardHeight);
-        for(int i = 0; i < m_TotalCreatures;i++)
-        {
-            b.addRandomTile();
-        }
-        return b;
-    }
-    return board;
-}
-void updateMouse(SDL_Event event, Board &board)
-{
-    int mouseX;
-    int mouseY;
-    
-    if(event.type == SDL_MOUSEBUTTONDOWN)
-    {
-        m_MouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
-        currentPosition.h = 5;
-        currentPosition.w = 5;
-        currentPosition.x = mouseX;
-        currentPosition.y = mouseY;
-        gui.update(currentPosition);
-        switch (gui.getMenuItem()) {
-            case 0:
-                updateBoard(board);
-                m_Update = true;
-                break;
-            case 1:
-                board = getBoard(board); //create new board
-                break;
-            case 2:
-                std::cout<<"place pieces manually"<<std::endl;
-                break;
-            case 3:
-                m_IsRunning = false;
-                break;
-                
-        }
-    }
-    if(event.type == SDL_MOUSEBUTTONUP)
-    {
-        m_Update = false;
-    }
-    
-}
-void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
-{
-    if(event.type == SDL_QUIT)
-    {
-        m_IsRunning = false;
-    }
-    if(keystates[SDL_SCANCODE_Q] )
-    {
-        m_IsRunning = false;
-    }
-    if(keystates[SDL_SCANCODE_U] && m_Update == false ) //update board
-    {
-        m_Update = true;
-        m_CreateBoard = true;
-        updateBoard(board);
-        
-    }
-    if(keystates[SDL_SCANCODE_N]) //create new board
-    {
-        m_Update = false;
-        board = getBoard(board);
-        m_CreateBoard = false;
-    }
-}
-
-void renderBoard(SDL_Renderer* m_Renderer, Board& b)
-{
-    SDL_RenderClear(m_Renderer);
-    for(Tile &t: b.getBoard())
-    {
-        if(t.alive())
-        {
-            SDL_SetRenderDrawColor(m_Renderer, 100, 0, 0, 255);
-            SDL_RenderFillRect(m_Renderer,&t.rect);
-        }
-        if(t.justPlaced)
-        {
-            SDL_SetRenderDrawColor(m_Renderer, 200, 0, 0, 255);
-            SDL_RenderFillRect(m_Renderer,&t.rect);
-        }
-    }
-}
 
 int main()
 {
@@ -181,4 +89,104 @@ int main()
        
     }
     return 0;
+}
+
+void updateBoard(Board &board)
+{
+    board.update();
+    board.generate();
+    board.removeOldTiles();
+}
+Board getBoard(Board &board)
+{
+
+    if(m_CreateBoard)
+    {
+        Board b = Board(m_BoardWidth,m_BoardHeight);
+
+        for(int i = 0; i < m_TotalCreatures;i++)
+        {
+            b.addRandomTile();
+        }
+        return b;
+    }
+    return board;
+}
+void updateMouse(SDL_Event event, Board &board)
+{
+    int mouseX;
+    int mouseY;
+    
+    if(event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        m_MouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+        currentPosition.h = 5;
+        currentPosition.w = 5;
+        currentPosition.x = mouseX;
+        currentPosition.y = mouseY;
+        gui.update(currentPosition);
+        switch (gui.getMenuItem()) {
+            case 0:
+                updateBoard(board);
+                m_Update = true;
+                break;
+            case 1:
+                board = getBoard(board); //create new board
+                break;
+            case 2:
+                std::cout<<"place pieces manually"<<std::endl;
+                break;
+            case 3:
+                m_IsRunning = false;
+                break;
+                
+        }
+    }
+    if(event.type == SDL_MOUSEBUTTONUP)
+    {
+       // m_Update = false;
+    }
+    
+}
+void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
+{
+    if(event.type == SDL_QUIT)
+    {
+        m_IsRunning = false;
+    }
+    if(keystates[SDL_SCANCODE_Q] )
+    {
+        m_IsRunning = false;
+    }
+    if(keystates[SDL_SCANCODE_U] && m_Update == false ) //update board
+    {
+        m_Update = true;
+        m_CreateBoard = true;
+        updateBoard(board);
+    }
+    if(keystates[SDL_SCANCODE_N]) //create new board
+    {
+        m_Update = false;
+        board = getBoard(board);
+        m_CreateBoard = false;
+    }
+}
+
+void renderBoard(SDL_Renderer* m_Renderer, Board& b)
+{
+    SDL_RenderClear(m_Renderer);
+    SDL_Delay(50);
+    for(Tile &t: b.getBoard())
+    {
+        if(t.alive())
+        {
+            SDL_SetRenderDrawColor(m_Renderer, 100, 0, 0, 255);
+            SDL_RenderFillRect(m_Renderer,&t.rect);
+        }
+        if(t.justPlaced)
+        {
+            SDL_SetRenderDrawColor(m_Renderer, 200, 0, 0, 255);
+            SDL_RenderFillRect(m_Renderer,&t.rect);
+        }
+    }
 }

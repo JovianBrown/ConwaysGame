@@ -12,15 +12,17 @@
 		0474BB90293BA97A004B5F29 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0474BB8F293BA97A004B5F29 /* main.cpp */; };
 		0474BB98293BA9E1004B5F29 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0474BB97293BA9E1004B5F29 /* SDL2.framework */; };
 		0474BB9B293BAEC3004B5F29 /* board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0474BB99293BAEC3004B5F29 /* board.cpp */; };
+		04A073D629420FBE00D52163 /* Georgia.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04A073D529420FBE00D52163 /* Georgia.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0474BB8A293BA97A004B5F29 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = usr/share/man/man1;
+			dstSubfolderSpec = 7;
 			files = (
+				04A073D629420FBE00D52163 /* Georgia.ttf in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -36,6 +38,7 @@
 		0474BB97293BA9E1004B5F29 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		0474BB99293BAEC3004B5F29 /* board.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = board.cpp; sourceTree = "<group>"; };
 		0474BB9A293BAEC3004B5F29 /* board.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = board.hpp; sourceTree = "<group>"; };
+		04A073D529420FBE00D52163 /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Georgia.ttf; path = ConwaysGame/res/Georgia.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,7 @@
 		0474BB83293BA97A004B5F29 = {
 			isa = PBXGroup;
 			children = (
+				04A073D529420FBE00D52163 /* Georgia.ttf */,
 				0474BB8E293BA97A004B5F29 /* ConwaysGame */,
 				0474BB96293BA9E1004B5F29 /* Frameworks */,
 			);

@@ -37,7 +37,6 @@ struct Button
         color.g = 255;
         color.b = 255;
         color.a = 255;
-        
     }
 };
 class GUI

@@ -62,10 +62,12 @@ void GUI::render(SDL_Renderer* renderer)
         buttonRect.h = b.h;
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, 50);
         SDL_RenderDrawRect(renderer,&buttonRect);
-        const char* buttonText = b.text.c_str();
-        surf=TTF_RenderText_Solid(font,buttonText,b.color);
+       // const char* buttonText = b.text.c_str();
+        surf=TTF_RenderText_Solid(font,b.text.c_str(),b.color);
         text=SDL_CreateTextureFromSurface(renderer,surf);
         SDL_FreeSurface(surf);
         SDL_RenderCopy(renderer,text,NULL,&buttonRect);
+        SDL_DestroyTexture(text);
+
     }
 }

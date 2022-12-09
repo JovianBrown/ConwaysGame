@@ -13,7 +13,11 @@
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
-static int TILE_SIZE = 16;
+static int TILE_SIZE = 8;
+#define EAST 8;
+#define WEST -TILE_SIZE;
+#define SOUTH TILE_SIZE;
+#define NORTH -TILE_SIZE;
 struct Tile
 {
     Tile(int xPos, int yPos)
@@ -22,14 +26,10 @@ struct Tile
         y = yPos;
         rect.x = x;
         rect.y = y;
-        rect.w = 16;
-        rect.h = 16;
+        rect.w = TILE_SIZE;
+        rect.h = TILE_SIZE;
     }
-    bool alive()
-    {
-        return isAlive;
-    }
-    const int TILE_SIZE = 16;
+    bool alive();
     int x;
     int y;
     bool isAlive = true;
@@ -57,6 +57,7 @@ class Board
         void generate();
         int getNeighbors(Tile tile);
         int getNeighbors(Tile tile, int flags);
+        void deleteAllTiles();
         void update();
     private:
         int width;
