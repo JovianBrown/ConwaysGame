@@ -18,6 +18,7 @@ bool Tile::alive()
 }
 void Board::generate()
 {
+    
     for(int i = 0; i < this->m_TilesX; i++ )
         for(int j = 0; j < this->m_TilesY; j++ )
         {

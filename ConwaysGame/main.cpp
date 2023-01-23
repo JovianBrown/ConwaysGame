@@ -175,17 +175,17 @@ void updateKeyboard(SDL_Event event, const Uint8* keystates,Board &board)
 void renderBoard(SDL_Renderer* m_Renderer, Board& b)
 {
     SDL_RenderClear(m_Renderer);
-    SDL_Delay(50);
+  //  SDL_Delay(50);
     for(Tile &t: b.getBoard())
     {
         if(t.alive())
         {
-            SDL_SetRenderDrawColor(m_Renderer, 100, 0, 0, 255);
+            SDL_SetRenderDrawColor(m_Renderer, 0, 255, 0, 255);
             SDL_RenderFillRect(m_Renderer,&t.rect);
         }
         if(t.justPlaced)
         {
-            SDL_SetRenderDrawColor(m_Renderer, 200, 0, 0, 255);
+            SDL_SetRenderDrawColor(m_Renderer, 0, 200, 0, 255);
             SDL_RenderFillRect(m_Renderer,&t.rect);
         }
     }
